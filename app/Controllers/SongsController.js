@@ -12,13 +12,20 @@ function _drawResults() {
   document.getElementById('songs').innerHTML = template
 }
 /**Draws the Users saved songs to the page */
-function _drawPlaylist() {}
+function _drawPlaylist() {
+  let playlist = store.State.playlist;
+  let template = ''
+
+  playlist.forEach(song => {template += song.playlistTemplate})
+  document.getElementById('playlist').innerHTML = template
+}
 
 //Public
 export default class SongsController {
   constructor() {
     //TODO Don't forget to register your subscribers
     store.subscribe('songs', _drawResults)
+    store.subscribe('playlist', _drawPlaylist)
   }
 
   /**Takes in the form submission event and sends the query to the service */
@@ -37,7 +44,7 @@ export default class SongsController {
    * @param {string} id
    */
   addSong(id) {
-    
+    SongService.addSong(id)
   }
 
   /**
